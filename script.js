@@ -2,7 +2,8 @@
 document.getElementById('splitButton').addEventListener('click', function() {
     const file = document.getElementById('vcfFileInput').files[0];
     const contactsPerFile = parseInt(document.getElementById('contactsPerFile').value, 10);
-    const fileName = document.getElementById('splitFileNameInput').value.trim() || 'split';
+    let fileName = document.getElementById('splitFileNameInput').value.trim() || 'split';
+    const startNumber = parseInt(document.getElementById('startNumberInput').value, 10) || 1; // Nomor awal
 
     if (!file || isNaN(contactsPerFile) || contactsPerFile <= 0) {
         alert('Masukkan file VCF dan jumlah kontak per file yang valid!');
@@ -30,11 +31,12 @@ document.getElementById('splitButton').addEventListener('click', function() {
         splitVcfFilesDiv.innerHTML = ''; // Bersihkan link download sebelumnya
 
         splitFiles.forEach((blob, index) => {
+            const currentIndex = startNumber + index; // Hitung nomor file saat ini
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${fileName}-${index + 1}.vcf`;
+            link.download = `${fileName}-${currentIndex}.vcf`;
             link.classList.add('download-link');
-            link.textContent = `${fileName}-${index + 1}.vcf`;
+            link.textContent = `${fileName}-${currentIndex}.vcf`;
             splitVcfFilesDiv.appendChild(link);
             splitVcfFilesDiv.appendChild(document.createElement('br'));
         });
