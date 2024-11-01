@@ -41,8 +41,11 @@ document.getElementById('splitButton').addEventListener('click', function() {
             let generatedFileName;
             if (fileNameParts.length > 1) {
                 generatedFileName = `${fileNameParts[0]} ${currentIndex}`;
-            } else {
+            } else if (fileNameParts[0]) {
                 generatedFileName = `${fileNameParts[0]}${currentIndex}`;
+            } else {
+                // Jika fileName kosong, gunakan currentIndex saja tanpa tambahan "split-"
+                generatedFileName = `${currentIndex}`;
             }
 
             // Menambahkan nama file tambahan jika diisi
